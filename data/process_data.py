@@ -35,14 +35,14 @@ def clean_data(df):
     df = df.drop(columns=['categories'], axis=1)
     df = pd.concat([df, categories], axis=1)
     df = df.drop_duplicates()
-    
+    df = df[df.related != '2']
     return df
 
 def save_data(df, database_filename):
     #saves data into sqlite table for model evaluation
     
-    engine = create_engine('sqlite:///disaster.db')
-    df.to_sql('disastertable', engine, index=False)
+    engine = create_engine(database_filename)
+    df.to_sql('disastertable', engine, index=False, if_exist='replace')
 
 
 def main():
