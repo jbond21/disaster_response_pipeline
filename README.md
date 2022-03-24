@@ -1,5 +1,11 @@
 # Disaster Response Pipeline Project
 
+### Summary
+
+The objective is to build a Machine Learning pipeline to classify messages for a disaster response team. 
+Using NLP the model is able to classify a message so the team knowz what type of an emergency it is and how to respond. 
+
+
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 

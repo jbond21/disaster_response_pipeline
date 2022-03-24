@@ -15,6 +15,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 nltk.download(['punkt', 'wordnet'])
 from sqlalchemy import create_engine
 from sklearn.metrics import classification_report
+from sklearn.model_selection import GridSearchCV
 import pickle
 
 
@@ -61,6 +62,17 @@ def build_model(X):
         ('tfidf', TfidfTransformer()),
         ('clf',  MultiOutputClassifier(RandomForestClassifier()))
     ])
+    
+    
+    parameters =  {
+        
+        'clf__estimator__n_estimators': [10, 20, 30],
+        'clf__estimator__min_samples_split': [2, 3, 4]
+    }
+    #pipeline.get_params()
+
+    model = GridSearchCV(pipeline, param_grid=parameters)
+    
     
     return model
 
