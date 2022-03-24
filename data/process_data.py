@@ -41,8 +41,8 @@ def clean_data(df):
 def save_data(df, database_filename):
     #saves data into sqlite table for model evaluation
     
-    engine = create_engine(database_filename)
-    df.to_sql('disastertable', engine, index=False, if_exist='replace')
+    engine = create_engine('sqlite:///' + database_filename)
+    df.to_sql('disastertable', engine, index=False, if_exists ='replace')
 
 
 def main():
