@@ -19,6 +19,8 @@ import pickle
 
 
 def load_data(database_filepath):
+    #loads sqlite table into dataset and returns X, Y, and category names
+    
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('disastertable', engine)
     X = df.message
@@ -37,6 +39,7 @@ def load_data(database_filepath):
     return X, Y, category_names
 
 def tokenize(text):
+    #returns tokenized data to build model
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -49,6 +52,7 @@ def tokenize(text):
 
 
 def build_model(X):
+    #builds the model using pipeline transformers with tokenized data
     for msg in X:
         tokens = tokenize(msg)
     
@@ -62,12 +66,15 @@ def build_model(X):
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    #evaluetes model performance
     y_pred = model.predict(X_test)
     for i in range(len(category_names)):
         print("Category:", Y_test.columns[i],"\n", classification_report(Y_test.iloc[:, i].values, y_pred[:, i]))
 
 
 def save_model(model, model_filepath):
+    #saves model into pickle file 
+    
     with open(model_filepath, 'wb') as file:
         pickle.dump(model, file)
 

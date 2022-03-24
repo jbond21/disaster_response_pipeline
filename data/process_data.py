@@ -4,6 +4,8 @@ import numpy as np
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
+    #loads and merges csv files to return a new dataset
+    
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = messages.copy()
@@ -12,6 +14,8 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    #reformats the category columns and returns a clean dataset for model
+    
     categories = df.categories.str.split(';', expand=True)
 
     row = list(df.categories.str.split(';', expand=True).iloc[0])
@@ -35,6 +39,8 @@ def clean_data(df):
     return df
 
 def save_data(df, database_filename):
+    #saves data into sqlite table for model evaluation
+    
     engine = create_engine('sqlite:///disaster.db')
     df.to_sql('disastertable', engine, index=False)
 
